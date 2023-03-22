@@ -5,6 +5,12 @@
 
 
 int main(){
-    printf("C'est le TP7 !");
-    return 0;
+  int* monTab;
+  int taille=10;
+  monTab= allouer(taille);
+  initialiser(monTab,taille);
+  afficher(monTab,taille);
+  printf("C'est le TP7 !\n");
+
+  return 0;
 }

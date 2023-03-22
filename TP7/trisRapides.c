@@ -36,7 +36,7 @@ int partitionner(int* monTab,int pas, int taille){
   return(j);
 }
 
-void triFusion(int* monTab, int deb, int fin){
+/*void triFusion(int* monTab, int deb, int fin){
   int milieu;
   if(deb<fin){
     milieu= (deb+fin)/2;
@@ -64,12 +64,12 @@ void fusionner(int* monTab,int deb, int milieu,int fin){
       droite= droite+1;
     }
     i=i+1;
-  };
+  }
   while (gauche <=milieu){
     tabTemp[i]=monTab[gauche];
     gauche = gauche +1;
     i=i+1;
-  };
+  }
   while(droite <= fin){
     tabTemp[i] <=monTab[droite];
     droite = droite +1;
@@ -80,7 +80,7 @@ void fusionner(int* monTab,int deb, int milieu,int fin){
   }
   liberer(tabTemp);
 }
-/*PROCEDURE triRapide ( tab : pointeur de tableau d entier, p : entier, r : entier)
+PROCEDURE triRapide ( tab : pointeur de tableau d entier, p : entier, r : entier)
 VARIABLE :
     q : entier
 DEBUT

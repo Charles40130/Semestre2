@@ -3,7 +3,7 @@ RM=rm -f
 SRC=$(wildcard *.c)
 OBJ=$(SRC:.c=.o)
 HEAD=$(wildcard *.h)
-PROG=main
+PROG=exe
 
 all : $(PROG)
 
