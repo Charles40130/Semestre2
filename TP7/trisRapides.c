@@ -13,13 +13,14 @@ void triRapide(int* monTab, int pas, int taille){
   int q;
   if (pas < taille){
     q = partitionner(monTab,pas,taille);
-    triRapide(monTab,pas,taille);
+    triRapide(monTab,pas,q);
     triRapide(monTab,q+1,taille);
   }
 }
 
 int partitionner(int* monTab,int pas, int taille){
-  int pivot= monTab[pas];
+  int pivot;
+  pivot= monTab[pas];
   int i= pas-1;
   int j= taille +1;
   while(i<j){
@@ -27,16 +28,16 @@ int partitionner(int* monTab,int pas, int taille){
       j=j-1;
     }while(monTab[j]>pivot);
     do{
-      i =i -1;
+      i=i+1;
     }while(monTab[i]<pivot);
-      if (i<j){
-        echanger(monTab,i,j);
-      }
+    if (i<j){
+      echanger(monTab,i,j);
+    }
   }
   return(j);
 }
 
-/*void triFusion(int* monTab, int deb, int fin){
+void triFusion(int* monTab, int deb, int fin){
   int milieu;
   if(deb<fin){
     milieu= (deb+fin)/2;
@@ -54,7 +55,7 @@ void fusionner(int* monTab,int deb, int milieu,int fin){
   max= fin-deb;
   gauche=deb;
   droite= milieu +1;
-  allouer(tabTemp);
+  tabTemp = allouer((deb+fin)/2);
   while(gauche <= milieu && droite <= fin){
     if (monTab[gauche]< monTab[droite]){
       tabTemp[i]=monTab[gauche];
@@ -71,15 +72,16 @@ void fusionner(int* monTab,int deb, int milieu,int fin){
     i=i+1;
   }
   while(droite <= fin){
-    tabTemp[i] <=monTab[droite];
+    tabTemp[i]=monTab[droite];
     droite = droite +1;
     i=i+1;
   }
   for (int i=0; i<max+1; i++){
     monTab[i+deb]= tabTemp[i];
   }
-  liberer(tabTemp);
+  free(tabTemp);
 }
+/*
 PROCEDURE triRapide ( tab : pointeur de tableau d entier, p : entier, r : entier)
 VARIABLE :
     q : entier

@@ -27,7 +27,7 @@ void triSelection(int* p_tab,int taille){
             if (p_tab[j] < p_tab[min]){
                 min =j;
             }
-            
+
         }
         echanger(p_tab,i,min );
         /*printf("Etape: \n");
@@ -38,13 +38,13 @@ void triSelection(int* p_tab,int taille){
 void triInsertion(int* p_tab,int taille){
     int j;
     int eltEnCours;
-    for(int i=0 ; i<taille-1;i++){
+    for(int i=0 ; i<taille;i++){
         eltEnCours=p_tab[i];
         for (j=i; 0<j && p_tab[j-1]>eltEnCours; j--){
-            p_tab[j]= p_tab[j-1];    
+            p_tab[j]= p_tab[j-1];
         }
         p_tab[j]=eltEnCours;
-        printf("Etape: \n");
-        afficher(p_tab,taille);
+        /*printf("Etape: \n");
+        afficher(p_tab,taille);*/
     }
 }

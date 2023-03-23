@@ -28,4 +28,4 @@ void triFusion(int* monTab, int pas, int taille);
 /* Résumé : ... */
 /* Entrée(s) : ... */
 /* Sortie(s) :  ...  */
-void fusionner(int* monTab, int pas, int taille);
+void fusionner(int* monTab, int deb,int milieu,int fin);
