@@ -25,3 +25,10 @@ void initialiser(int* monTab,int taille);
 /* Entrée(s) : ... */
 /* Sortie(s) :  ...  */
 void afficher(int* monTab,int taille);
+
+/* Auteur : ... */
+/* Date :   ... */
+/* Résumé : ... */
+/* Entrée(s) : ... */
+/* Sortie(s) :  ...  */
+void echanger(int* monTab,int i,int j);

@@ -15,7 +15,7 @@ int* allouer(int taille){
 void initialiser(int* monTab,int taille){
   srand (time (NULL));
   for (int i=0 ; i<taille; i++){
-      monTab[i]= rand() % 100;
+    monTab[i]= rand() % 100;
   }
 }
 
@@ -32,3 +32,5 @@ void echanger(int* monTab,int i,int j){
   monTab[i]=monTab[j];
   monTab[j]=temp;
 }
+
+
