@@ -61,17 +61,22 @@ void creationEquipe(Equipe* e){
 
 
 void ajouterJoueur(Equipe* e,Joueur j){
-   int indexJ;
-   indexJ=e->nb_Joueurs;
-   if (indexJ==0){
-     e->mesJoueurs=malloc(1*sizeof(Joueur));
-     e->mesJoueurs[0]=j;
-     e->nb_Joueurs=1;
-   }else{
-     e->mesJoueurs=realloc(e->mesJoueurs,indexJ+1);
-     e->mesJoueurs[indexJ]=j;
-     e->nb_Joueurs=indexJ+1;
-   }
+
+  int indexJ;
+  indexJ=e->nb_Joueurs;
+  if(indexJ==0){
+    e->mesJoueurs=malloc(1*sizeof(Joueur));
+    e->mesJoueurs[0]=j;
+    e->nb_Joueurs=1;
+  }else{
+    e->mesJoueurs=realloc(e->mesJoueurs,indexJ+1*sizeof(Joueur));
+    e->mesJoueurs[indexJ]=j;
+    e->nb_Joueurs=indexJ+1;
+  }
+  if(e->mesJoueurs==NULL){
+    printf("Erreur: le pointeur mesJoueurs est NULL\n");
+    exit(EXIT_FAILURE);
+  }
 }
 
 void afficherEquipe(Equipe e){
@@ -84,4 +89,15 @@ void afficherEquipe(Equipe e){
   for(int i =0; i<e.nb_Joueurs;i++){
     afficherJoueur(e.mesJoueurs[i]);
   }
+}
+
+Joueur meilleurButeur(Equipe e){
+  Joueur meilleur;
+  meilleur=e.mesJoueurs[0];
+  for (int i=1; i<e.nb_Joueurs;i++){
+    if(meilleur.nb_buts<e.mesJoueurs[i].nb_buts){
+      meilleur=e.mesJoueurs[i];
+    }
+  }
+  return meilleur;
 }

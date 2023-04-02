@@ -22,7 +22,7 @@ struct Equipe{
 typedef struct Equipe Equipe;
 /* Auteur : ... */
 /* Date :   ... */
-/* Résumé : ... */
+/* Résumé : ... */ 
 /* Entrée(s) : ... */
 /* Sortie(s) :  ...  */
 
@@ -51,3 +51,4 @@ void afficherEquipe(Equipe e);
 /* Sortie(s) :  ...  */
 
 Joueur meilleurButeur(Equipe e);
+
