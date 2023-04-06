@@ -1,0 +1,32 @@
+[ 
+{ 
+'id' : '01',  
+'appelation': 'chemise', 
+'taille': '40',
+'prix' : '10€', 
+}, 
+{ 
+'id' : '02',  
+'appelation': 'pantalon', 
+'taille': '42',
+'prix' : '20€', 
+}, 
+{ 
+'id' : '03',  
+'appelation': 'chaussettes', 
+'taille': '39',
+'prix' : '5€', 
+}, 
+{ 
+'id' : '04',  
+'appelation': 'chapeau', 
+'taille': 'M',
+'prix' : '8€', 
+}, 
+{ 
+'id' : '05',  
+'appelation': 'pull', 
+'taille': '38',
+'prix' : '10€', 
+}, 
+] 
