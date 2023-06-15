@@ -96,23 +96,24 @@ void trier_cartes(int nb_joueurs,cartes cartes_joueurs[][10]){
   }while(indice<nb_joueurs);
 }
 
-void plateau_de_jeu(cartes plateau[4][6],cartes melange[104], int nb_tour_restants){ //fonction qui affiche les cartes du plateau
+void initialiser_plateau(cartes melange[104], cartes plateau[4][6]) {
   int indice_carte = 103;
-  if (nb_tour_restants == 10) {
-    for(int i=0;i<4;i++){
-      for(int j=0;j<6;j++){
-        plateau[i][j].nb=0;
-      }
+  for(int i=0;i<4;i++){
+    for(int j=0;j<6;j++){
+      plateau[i][j].nb=0;
     }
   }
   for (int i=0;i<4;i++){
     plateau[i][0]= melange[indice_carte];
     indice_carte--;
   }
+}
+
+void plateau_de_jeu(cartes plateau[4][6]){ //fonction qui affiche les cartes du plateau
   for(int i=0;i<4;i++){
     for (int j=0;j<6;j++){
       if(plateau[i][j].nb == 0){
-        printf("    __     ||");
+        printf("          __            ||");
       }
       else{
         printf("  [");
@@ -122,7 +123,14 @@ void plateau_de_jeu(cartes plateau[4][6],cartes melange[104], int nb_tour_restan
         if (plateau[i][j].nb > 9 && plateau[i][j].nb < 100){
           printf(" ");
         }
-        printf("%d,%d]  ",plateau[i][j].nb,plateau[i][j].tdb);
+        printf("%d,",plateau[i][j].nb);
+        for(int k=0;k<plateau[i][j].tdb;k++){
+          printf("🐮");
+        }
+        printf("]  ");
+        for(int h=0;h<14-(plateau[i][j].tdb*2);h++){
+          printf(" ");
+        }
         printf("||");
       }
     }
@@ -134,9 +142,43 @@ void main_joueurs(cartes cartes_joueurs[][10],int i,int nb_tour){
   printf("\n\nVoici vos cartes:\n");
   for (int j=0;j<nb_tour;j++){
     if(cartes_joueurs[i][j].nb!=0){
-      printf("Carte %d : nb = %d, tdb = %d\n", j + 1, cartes_joueurs[i][j].nb, cartes_joueurs[i][j].tdb);
+      printf("----------------   ");
+    }}
+    printf("\n");
+  for (int j=0;j<nb_tour;j++){
+    printf("|     ");
+    if(cartes_joueurs[i][j].nb!=0){
+      if (cartes_joueurs[i][j].nb < 10) {
+        printf("  ");
+      }
+      if (cartes_joueurs[i][j].nb > 9 && cartes_joueurs[i][j].nb < 100){
+        printf(" ");
+      }
+      printf("%d      ",cartes_joueurs[i][j].nb);
+      }
+      printf("|   ");
     }
-  }
+    printf("\n");
+  for (int j=0;j<nb_tour;j++){
+    if(cartes_joueurs[i][j].nb!=0){
+      printf("|");
+      for (int f=0;f<(14-cartes_joueurs[i][j].tdb*2)/2;f++){
+        printf(" ");
+      }
+      for (int h=0;h<cartes_joueurs[i][j].tdb;h++){
+        printf("🐮");
+      }
+      for (int f=0;f<(14-cartes_joueurs[i][j].tdb*2)/2;f++){
+        printf(" ");
+      }
+      printf("|   ");
+    }}
+  printf("\n");
+  for (int j=0;j<nb_tour;j++){
+    if(cartes_joueurs[i][j].nb!=0){
+      printf("----------------   ");
+    }}
+  printf("\n");
   printf("\nQuelle cartes sélectionnez-vous pour ce tour?\n");
 }
 
@@ -192,9 +234,10 @@ void trier_cartes_a_jouer(int nb_joueurs, cartes cartes_a_jouer[nb_joueurs]){
 void afficher_cartes(int nb_joueurs, cartes cartes_a_jouer[nb_joueurs]) {
   printf("------ Cartes choisies par les joueurs ------\n");
   for (int i=0; i<nb_joueurs;i++){
-    printf("Joueur %d : [%d,%d]\n", i+1, cartes_a_jouer[i].nb, cartes_a_jouer[i].tdb);
+    printf("Cartes n°%d : [%d,%d]\n", i+1, cartes_a_jouer[i].nb, cartes_a_jouer[i].tdb);
   }
 }
+
 void supprime_elements_similaires(cartes cartes_joueurs[][10], int nb_joueurs, int nb_tour, cartes cartes_a_jouer[]) {
     for (int i = 0; i < nb_joueurs; i++) {
         for (int j = 0; j < nb_joueurs; j++) {
@@ -208,9 +251,9 @@ void supprime_elements_similaires(cartes cartes_joueurs[][10], int nb_joueurs, i
                     k--;
                 }}}}}
 
-void chosir_serie(cartes carte, cartes plateau[4][6], int joueur, int nb_joueurs, cartes cartes_ramassees_joueurs[nb_joueurs][30], cartes melange[104], int nb_tour_restants) {
+void chosir_serie(cartes carte, cartes plateau[4][6], int joueur, int nb_joueurs, cartes cartes_ramassees_joueurs[nb_joueurs][30]) {
   int serie;
-  plateau_de_jeu(plateau, melange, nb_tour_restants-1);
+  plateau_de_jeu(plateau);
   printf( "Joueur %d : votre carte ne peut pas être placée car elle est trop faible !\nVeuillez entrer le numéro d'une des 4 séries sur le plateau pour y ramasser toutes les cartes !\n",joueur+1);
   scanf("%d", &serie);
   int i=0;
@@ -220,11 +263,13 @@ void chosir_serie(cartes carte, cartes plateau[4][6], int joueur, int nb_joueurs
   int j=0;
   while (j<6 && plateau[serie-1][j].nb != 0) {
     cartes_ramassees_joueurs[joueur][i] = plateau[serie-1][j];
+    plateau[serie-1][j].nb = 0;
     j=j+1;
   }
+  plateau[serie-1][0] = carte;
 }
 
-void placer_carte(cartes carte, cartes plateau[4][6],int joueur, int nb_joueurs, cartes cartes_ramassees_joueurs[nb_joueurs][30], cartes melange[104], int nb_tour_restants) {
+void placer_carte(cartes carte, cartes plateau[4][6],int joueur, int nb_joueurs, cartes cartes_ramassees_joueurs[nb_joueurs][30]) {
   int difference = 104;
   int colonnes[4];
   int ligne;
@@ -253,28 +298,59 @@ void placer_carte(cartes carte, cartes plateau[4][6],int joueur, int nb_joueurs,
     int i = ligne;
     int j = colonnes[ligne];
     plateau[i][j] = carte;
+
   } else {
-    chosir_serie(carte, plateau, joueur, nb_joueurs, cartes_ramassees_joueurs, melange, nb_tour_restants);
+    chosir_serie(carte, plateau, joueur, nb_joueurs, cartes_ramassees_joueurs);
   }
 }
 
-void suppligne(cartes plateau[4][6]){
-  for (int i=0;i++;i<4){
-    if (plateau[i][6].nb){
-      for (int j=0;j++;j<6){
-        plateau[i][j].nb = 0;
-      }
+ void lignecomplete(cartes plateau[4][6],cartes cartes_ramassees_joueurs[][30],int id_joueur){
+   //Balaye les lignes du plateau pour savoir si la 6ème colonne est complétée !
+   for(int i=0; i<4;i++){
+     if(plateau[i][5].nb!=0){
+
+       //Recherche à partir de quel indice du tableau carte_ramassée_joueur le tableau n'est pas complété
+       int k=0;
+       while (cartes_ramassees_joueurs[id_joueur][k].nb != 0) {
+         k=k+1;
+       }
+
+       //met les élément du tableau dans les cartes ramassées//
+       for( int h=0;h<5;h++){
+         cartes_ramassees_joueurs[id_joueur][k+h]=plateau[i][h];
+       }
+       printf("La ligne n° %d est pleine! Joueur n°%d tu récupère les cartes de la ligne !\n",i+1,id_joueur+1);
+
+
+       ///remet la ligne à 0 et la 6ème élement au début de la ligne du plateau//
+       plateau[i][0]=plateau[i][5];
+       for (int j=1;j<6;j++){
+         plateau[i][j].nb=0;
+       }
+     }
+   }
+ }
+
+void noms(int joueursR,char noms_des_joueurs[joueursR][30]){
+  char nom[30];
+  for (int i=0;i<joueursR;i++){
+    printf("Quel est le nom du joueur n°%d\n",i+1);
+    scanf("%s",nom);
+    for (int j=0;j < sizeof(nom);j++){
+      noms_des_joueurs[i][j]=nom[j];
     }
   }
 }
 
-void tour_de_jeu(int nb_tour,int nb_joueurs,cartes plateau[4][6],cartes melange[104],cartes cartes_joueurs[10][10],int joueursR,int joueursIA,cartes cartes_a_jouer[nb_joueurs],cartes cartes_ramassees_joueurs[nb_joueurs][30]){
+void tour_de_jeu(int nb_tour,int nb_joueurs,cartes plateau[4][6],cartes melange[104],cartes cartes_joueurs[10][10],int joueursR,int joueursIA,cartes cartes_a_jouer[nb_joueurs],cartes cartes_ramassees_joueurs[nb_joueurs][30],char noms_des_joueurs[][30]){
   for (int i=0;i<joueursR;i++){ //fonction qui demande au joueur quelle carte veut-il jouer
     int select;
     system("clear");
-    plateau_de_jeu(plateau,melange,nb_tour);
+    plateau_de_jeu(plateau);
+    do{
     main_joueurs(cartes_joueurs,i,nb_tour);
     scanf("%d",&select);
+  }while(select<1 || select>10);
     cartes_a_jouer[i].nb=cartes_joueurs[i][select-1].nb;
     cartes_a_jouer[i].tdb=cartes_joueurs[i][select-1].tdb;
   }
@@ -283,10 +359,27 @@ void tour_de_jeu(int nb_tour,int nb_joueurs,cartes plateau[4][6],cartes melange[
   trier_cartes_a_jouer(nb_joueurs, cartes_a_jouer);
   afficher_cartes(nb_joueurs, cartes_a_jouer);
   for (int j=0;j<nb_joueurs;j++){
-    placer_carte(cartes_a_jouer[j], plateau, j, nb_joueurs, cartes_ramassees_joueurs, melange, nb_tour);
-    suppligne(plateau);
+    placer_carte(cartes_a_jouer[j], plateau, j, nb_joueurs, cartes_ramassees_joueurs);
+    lignecomplete(plateau,cartes_ramassees_joueurs,j);
   }
-  plateau_de_jeu(plateau, melange, nb_tour-1);
+  plateau_de_jeu(plateau);
   supprime_elements_similaires(cartes_joueurs, nb_joueurs, nb_tour, cartes_a_jouer);
+  sleep(6);
+}
 
+int verifpts(int nb_joueurs,cartes cartes_ramassees_joueurs[nb_joueurs][30]){ //Fonction qui compte le total de tête de boeuf de chaque joueur ,la fonction renvoi le numéro du joueur si celui ci est à plus de 66pts!
+  int total;
+  int j;
+  for(int i=0;i<nb_joueurs;i++){
+    total=0;
+    j=0;
+    while(cartes_ramassees_joueurs[i][j].nb != 0){
+      total=total + cartes_ramassees_joueurs[i][j].tdb;
+      j++;
+      if (total>65){
+        return i+1;
+      }
+    }
+  }
+  return 0;
 }

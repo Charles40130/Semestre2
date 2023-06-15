@@ -16,6 +16,8 @@ int main(){
     cartes plateau[4][6]; //les cartes appartenant au plateau de jeu
 
     joueurs(&joueursR,&joueursIA); //demande combien de joueurs vont jouer
+    char noms_des_joueurs[joueursR][30];
+    noms(joueursR,noms_des_joueurs);
     nb_joueurs=joueursR+joueursIA;
     cartes cartes_a_jouer[nb_joueurs]; // liste de cartes chosies par les joueurs
     cartes cartes_ramassees_joueurs[nb_joueurs][30];
@@ -33,7 +35,11 @@ int main(){
     distribuer_cartes(melange, nb_joueurs, cartes_joueurs); //fonction qui distribue les cartes en fonction du nombre de joueurs
     trier_cartes(nb_joueurs,cartes_joueurs); //fonction trie les cartes des joueurs de façon croissante (tri par séléction)
 
-    tour_de_jeu(nb_tour_restants,nb_joueurs,plateau,melange,cartes_joueurs,joueursR,joueursIA,cartes_a_jouer,cartes_ramassees_joueurs);
+    initialiser_plateau(melange, plateau);
+    while(!verifpts(nb_joueurs,cartes_ramassees_joueurs)){
+      tour_de_jeu(nb_tour_restants,nb_joueurs,plateau,melange,cartes_joueurs,joueursR,joueursIA,cartes_a_jouer,cartes_ramassees_joueurs,noms_des_joueurs);
+    }
+    printf("Jeu terminé !\n");
 
     return 0;
 }

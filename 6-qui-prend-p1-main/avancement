@@ -26,7 +26,7 @@ Etapes de programmation :
 
         2) Encaissement des cartes :
 
-            a) Série terminée - Thomas
+            a) Série terminée - Charles
 
             b) Carte trop faible - Thomas
 
@@ -45,7 +45,7 @@ projet.c :
 
     variables :
 
-        int joueursR : nb joueurs réems
+        int joueursR : nb joueurs réels
         int joueursIA : nb joueurs virtuels
         int nb_joueurs : somme des joueurs réels et virtuels
         int nb_tour_restant : nb tour avant de redistribuer les cartes
